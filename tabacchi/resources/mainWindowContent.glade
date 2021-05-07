@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.22.2 -->
+<interface>
+  <requires lib="gtk+" version="3.18"/>
+  <object class="GtkMenu" id="ordiniPopupMenu">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <child>
+      <object class="GtkMenuItem" id="modificaOrdineMenuItem">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="tooltip_text" translatable="yes">Modifica ordine</property>
+        <property name="label" translatable="yes">Modifica</property>
+        <property name="use_underline">True</property>
+        <signal name="activate" handler="on_modificaOrdineMenuItem_activate" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="eliminaOrdineMenuItem">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Elimina</property>
+        <property name="use_underline">True</property>
+        <signal name="activate" handler="on_eliminaOrdineMenuItem_activate" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="visualizzaOrdineMenuItem">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Visualizza</property>
+        <property name="use_underline">True</property>
+        <signal name="activate" handler="on_visualizzaOrdineMenuItem_activate" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkSeparatorMenuItem" id="separatormenuitem2">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="inviaOrdineMenuItem">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Invio ordine</property>
+        <property name="use_underline">True</property>
+        <signal name="activate" handler="on_inviaOrdineMenuItem_activate" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="ricezioneOrdineMenuItem">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Ricezione ordine</property>
+        <property name="use_underline">True</property>
+        <signal name="activate" handler="on_ricezioneOrdineMenuItem_activate" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkSeparatorMenuItem" id="separatormenuitem3">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="u88FaxMenuItem">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Stampa U88-Fax</property>
+        <property name="use_underline">True</property>
+        <signal name="activate" handler="on_u88FaxMenuItem_activate" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkSeparatorMenuItem" id="separatormenuitem9">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="suppletivoMenuItem">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Suppletivo</property>
+        <property name="use_underline">True</property>
+        <child type="submenu">
+          <object class="GtkMenu" id="menu5">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <child>
+              <object class="GtkMenuItem" id="editSuppletivoMenuItem">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Modifica</property>
+                <property name="use_underline">True</property>
+                <signal name="activate" handler="on_editSuppletivoMenuItem_activate" swapped="no"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkMenuItem" id="delSuppletivoMenuItem">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Elimina</property>
+                <property name="use_underline">True</property>
+                <signal name="activate" handler="on_delSuppletivoMenuItem_activate" swapped="no"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSeparatorMenuItem" id="separatormenuitem8">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkMenuItem" id="u88FaxSuppletivoMenuItem">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Stampa U88-Fax</property>
+                <property name="use_underline">True</property>
+                <signal name="activate" handler="on_u88FaxSuppletivoMenuItem_activate" swapped="no"/>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkSeparatorMenuItem" id="separatormenuitem4">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="inventarioMenuItem">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Stima valore magazzino..</property>
+        <property name="use_underline">True</property>
+        <signal name="activate" handler="on_inventarioMenuItem_activate" swapped="no"/>
+      </object>
+    </child>
+  </object>
+  <object class="GtkBox" id="tabacchiVBox">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="orientation">vertical</property>
+    <child>
+      <object class="GtkToolbar" id="tabacchiToolbar">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="toolbar_style">icons</property>
+        <property name="show_arrow">False</property>
+        <child>
+          <object class="GtkToolButton" id="ordineToolbutton">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="tooltip_text" translatable="yes">Nuovo ordine..</property>
+            <property name="label" translatable="yes">Nuovo ordine</property>
+            <property name="use_underline">True</property>
+            <property name="icon_name">document-new</property>
+            <signal name="clicked" handler="on_nuovoOrdineMenuItem_activate" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="homogeneous">True</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSeparatorToolItem" id="toolbutton1">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="homogeneous">True</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkToolButton" id="inviaOrdineToolbutton">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="tooltip_markup">Invia ordine..</property>
+            <property name="label" translatable="yes">Invia ordine</property>
+            <property name="use_underline">True</property>
+            <property name="icon_name">mail-send</property>
+            <signal name="clicked" handler="on_inviaOrdineMenuItem_activate" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="homogeneous">True</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSeparatorToolItem" id="toolbutton4">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="homogeneous">True</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkToolButton" id="logistaToolbutton">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="tooltip_text" translatable="yes">Gestisci catalogo Logista..</property>
+            <property name="label" translatable="yes">Catalogo Logista</property>
+            <property name="use_underline">True</property>
+            <property name="icon_name">system-file-manager</property>
+            <signal name="clicked" handler="on_logistaMenuitem_activate" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="homogeneous">True</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSeparatorToolItem" id="separatortoolitem1">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="homogeneous">False</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkToolButton" id="ricezioneOrdineToolbutton">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="tooltip_text" translatable="yes">Ricezione merce..</property>
+            <property name="label" translatable="yes">Ricezione ordine</property>
+            <property name="use_underline">True</property>
+            <property name="icon_name">dialog-ok</property>
+            <signal name="clicked" handler="on_ricezioneOrdineMenuItem_activate" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="homogeneous">True</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSeparatorToolItem" id="toolbutton2">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="homogeneous">True</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkToolButton" id="pianoLevataToolbutton">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="tooltip_text" translatable="yes">Piano Levate</property>
+            <property name="label" translatable="yes">Piano Levate</property>
+            <property name="use_underline">True</property>
+            <property name="stock_id">gtk-index</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="homogeneous">True</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkToolItem" id="toolbutton3">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="tooltip_text" translatable="yes">Filtro elenco ordini</property>
+            <child>
+              <object class="GtkComboBox" id="filtroCombobox">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">end</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="homogeneous">False</property>
+          </packing>
+        </child>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">False</property>
+        <property name="position">1</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkScrolledWindow" id="ordiniScrolledWindow">
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="has_focus">True</property>
+        <property name="shadow_type">etched-out</property>
+        <child>
+          <object class="GtkTreeView" id="ordiniTreeview">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <child internal-child="selection">
+              <object class="GtkTreeSelection" id="treeview-selection"/>
+            </child>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="expand">True</property>
+        <property name="fill">True</property>
+        <property name="padding">4</property>
+        <property name="position">2</property>
+      </packing>
+    </child>
+  </object>
+</interface>
