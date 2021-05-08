@@ -18,16 +18,16 @@ import base64
 import locale
 import gi
 
-from . import browserWebkit2
-from .browserWebkit2 import Browser
-from . import config
-from .config import log
-from . import ordini
-from . import preferencesTabacchi
-from .preferencesTabacchi import prefs
-from . import stampe
-from . import stats
-from . import utility
+import browserWebkit2
+from browserWebkit2 import Browser
+import config
+from config import log
+import ordini
+import preferencesTabacchi
+from preferencesTabacchi import prefs
+import stampe
+import stats
+import utility
 
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk, Gio, GLib, GdkPixbuf, Pango  # noqa: E402
@@ -695,16 +695,24 @@ class TabacchiDialog(utility.GladeWindow):
 
     # Aggiornamento DB Tabacchi tramite portale Logista (scaricando listino su file Excel)
     def updateCatalogo(self, widget=None):
-        # Download dal portale Logista del file con il catalogo aggionato
         url = prefs.catalogoUrl
-        username = prefs.tabacchiUser
-        password = keyring.get_password(prefs.TABACCHI_STR, username)
-        filename = "%s/catalogo.xls" % tempfile.mkdtemp()
-        downloadThread = utility.DownloadThread(url, filename, username, password)
-        progressDialog = utility.ProgressDialog(self.tabacchiDialog, "Download catalogo Tabacchi in corso..",
-                                                "Dal sito www.logista.it", "Aggiornamento catalogo Logista", downloadThread)
-        progressDialog.setResponseCallback(self.__updateCatalogoCallback)
-        progressDialog.start()
+
+        # Download dal portale Logista del file con il catalogo aggionato
+        if url is not None and (len(url) > 0):
+            username = prefs.tabacchiUser
+            password = keyring.get_password(prefs.TABACCHI_STR, username)
+            filename = f"{tempfile.mkdtemp()}/catalogo.xls"
+            print(f"{username=} {password=} {filename=}")
+            downloadThread = utility.DownloadThread(url, filename, username, password)
+            progressDialog = utility.ProgressDialog(self.tabacchiDialog, "Download catalogo Tabacchi in corso..", "Dal sito www.logista.it", "Aggiornamento catalogo Logista", downloadThread)
+            progressDialog.setResponseCallback(self.__updateCatalogoCallback)
+            progressDialog.start()
+        else:
+            msgDialog = Gtk.MessageDialog(parent=self.tabacchiDialog, modal=True, message_type=Gtk.MessageType.ERROR, buttons=Gtk.ButtonsType.CANCEL, text="URL portale Logista mancante.")
+            msgDialog.format_secondary_text("Aggiornare le preferenze.")
+            msgDialog.set_title("Attenzione")
+            msgDialog.run()
+            msgDialog.destroy()
 
     #
     def __updateCatalogoCallback(self, filename):

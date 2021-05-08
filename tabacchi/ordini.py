@@ -11,12 +11,12 @@ import datetime
 from playsound import playsound
 import gi
 
-from . import config
-from .config import log
-from . import utility
-from . import stats
-from .preferencesTabacchi import prefs
-from . import preferencesTabacchi
+import config
+from config import log
+import utility
+import stats
+from preferencesTabacchi import prefs
+import preferencesTabacchi
 
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk   # noqa: E402

@@ -29,8 +29,8 @@ from reportlab.lib.enums import TA_CENTER
 from Crypto.Cipher import AES
 import gi
 
-from . import config
-from .config import log
+import config
+from config import log
 
 gi.require_version('Gtk', '3.0')
 gi.require_version('Gdk', '3.0')
@@ -691,8 +691,8 @@ class DownloadThread(WorkerThread):
             myrequest = request.Request(self.url)
 
             if (self.user and self.pwd):
-                base64string = base64.encodestring('%s:%s' % (self.user, self.pwd))[:-1]
-                myrequest.add_header("Authorization", "Basic %s" % base64string)
+                base64string = base64.encodestring(f'{self.user}:{self.pwd}')[:-1]
+                myrequest.add_header('Authorization', f'Basic {base64string}')
 
             # Inizia il download del file
             myresponse = request.urlopen(myrequest)

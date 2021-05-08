@@ -14,8 +14,8 @@ from matplotlib.dates import MonthLocator, DateFormatter
 from matplotlib.figure import Figure
 import gi
 
-from .preferencesTabacchi import prefs
-from . import utility
+from preferencesTabacchi import prefs
+import utility
 
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk  # noqa: E402
