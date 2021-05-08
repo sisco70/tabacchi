@@ -17,16 +17,16 @@ import base64
 import locale
 import gi
 
-import browserWebkit2
-from browserWebkit2 import Browser
-import config
-from config import log
-import ordini
-import preferencesTabacchi
-from preferencesTabacchi import prefs
-import stampe
-import stats
-import utility
+from . import browserWebkit2
+from .browserWebkit2 import Browser
+from . import config
+from .config import log
+from . import ordini
+from . import preferencesTabacchi
+from .preferencesTabacchi import prefs
+from . import stampe
+from . import stats
+from . import utility
 
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk, Gio, GLib, GdkPixbuf, Pango  # noqa: E402

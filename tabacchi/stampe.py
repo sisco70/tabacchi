@@ -17,9 +17,9 @@ from reportlab.pdfgen.canvas import Canvas
 from reportlab.platypus import Table, TableStyle, Image
 import gi
 
-import utility
-import ordini
-from preferencesTabacchi import prefs
+from . import utility
+from . import ordini
+from .preferencesTabacchi import prefs
 
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, GLib, Gio  # noqa: E402

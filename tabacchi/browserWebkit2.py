@@ -4,7 +4,7 @@
 # Copyright (C) Francesco Guarnieri 2020 <francesco@guarnie.net>
 #
 import gi
-from config import log
+from .config import log
 
 gi.require_version('WebKit2', '4.0')
 gi.require_version('Gtk', '3.0')

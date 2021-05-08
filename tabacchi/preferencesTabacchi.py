@@ -12,10 +12,10 @@ import bluetooth
 import gi
 import datetime
 
-import config
-from config import log
-import utility
-from utility import WorkerThread
+from . import config
+from .config import log
+from . import utility
+from .utility import WorkerThread
 
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, GLib  # noqa: E402

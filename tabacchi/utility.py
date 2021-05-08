@@ -29,8 +29,8 @@ from reportlab.lib.enums import TA_CENTER
 from Crypto.Cipher import AES
 import gi
 
-import config
-from config import log
+from . import config
+from .config import log
 
 gi.require_version('Gtk', '3.0')
 gi.require_version('Gdk', '3.0')
