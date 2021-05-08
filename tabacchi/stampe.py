@@ -1,5 +1,3 @@
-#!/usr/bin/python
-# coding: UTF-8
 #
 # Copyright (C) Francesco Guarnieri 2020 <francesco@guarnie.net>
 #

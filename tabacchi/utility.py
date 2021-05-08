@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # Copyright (C) Francesco Guarnieri 2020 <francesco@guarnie.net>
 #
