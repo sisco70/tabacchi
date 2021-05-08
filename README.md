@@ -12,10 +12,10 @@ Ho sviluppato questo software per semplificare la gestione della mia attività s
 #### Build
 `poetry build`
 
-#### Install
+#### Install (Linux Ubuntu)
 ```
-cd dist
-pip install tabacchi-0.3.0.tar.gz
+sudo apt install libbluetooth-dev
+pip install tabacchi-0.3.1.tar.gz
 ```
 
 #### Run
