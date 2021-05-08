@@ -4,9 +4,7 @@ version = "0.3.1"
 description = "Tabacchi - Gestionale per tabaccherie"
 authors = ["Francesco Guarnieri"]
 license = "Apache-2.0"
-include = ["resources/*"]
-include = ["demo/*"]
-
+include = ["resources/*", "demo/*"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
