@@ -8,5 +8,3 @@
 **/*.pyc
 **/__pycache__/
 dist/*
-
-poetry.lock
