@@ -13,7 +13,6 @@ import sys
 import tempfile
 import xlrd
 import xlwt
-import keyring
 import base64
 import locale
 import gi
@@ -697,13 +696,11 @@ class TabacchiDialog(utility.GladeWindow):
     def updateCatalogo(self, widget=None):
         url = prefs.catalogoUrl
 
-        # Download dal portale Logista del file con il catalogo aggionato
+        # Download dal portale Logista del file con il catalogo aggionato.
+        # Utente e password non servono, il file è in chiaro (servono per inserire gli ordini sul portale).
         if url is not None and (len(url) > 0):
-            username = prefs.tabacchiUser
-            password = keyring.get_password(prefs.TABACCHI_STR, username)
             filename = f"{tempfile.mkdtemp()}/catalogo.xls"
-            print(f"{username=} {password=} {filename=}")
-            downloadThread = utility.DownloadThread(url, filename, username, password)
+            downloadThread = utility.DownloadThread(url, filename)
             progressDialog = utility.ProgressDialog(self.tabacchiDialog, "Download catalogo Tabacchi in corso..", "Dal sito www.logista.it", "Aggiornamento catalogo Logista", downloadThread)
             progressDialog.setResponseCallback(self.__updateCatalogoCallback)
             progressDialog.start()

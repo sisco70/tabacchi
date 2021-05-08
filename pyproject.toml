@@ -6,6 +6,9 @@ authors = ["Francesco Guarnieri"]
 license = "Apache-2.0"
 include = ["resources/*", "demo/*"]
 
+# In https://pypi.org/pypi/PyBluez/json pyobjc-core is listed under requires_dist without any platform marker.
+# Cant'add pybluez workaround:
+# poetry add git+https://github.com/pybluez/pybluez#0.23
 [tool.poetry.dependencies]
 python = "^3.8"
 PyGObject = "^3.38.0"
@@ -29,4 +32,4 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-tabacchi = "tabacchi.main:start"
+tabacchi = "main:start"
