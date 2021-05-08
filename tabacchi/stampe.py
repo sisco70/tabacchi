@@ -52,9 +52,8 @@ class ArticoliReport(utility.Report):
         self.writeCell(locale.format_string("%.3f kg", unita), 2)
         self.writeCell(locale.format_string("%.3f kg", livello), 3)
 
+
 # Report inventario
-
-
 class InventarioReport(utility.Report):
     def __init__(self, parent, _id, data):
         NUM_ROWS = 60
@@ -177,8 +176,7 @@ def printLabels(parent, labelList, data, row, col):
                 t = Table(tableData, COL_WIDTHS, ROW_SIZE)
                 # GRIGLIA per debug
                 # t.setStyle(TableStyle([('ALIGN',(0,0),(-1,-1),'CENTER'), ('VALIGN',(0,0),(-1,-1),'MIDDLE'), ('FONT',(0,0),(-1,-1), 'Helvetica-Bold', 24), ('BOX', (0,0), (-1,-1), 0.25, colors.black), ('INNERGRID', (0,0), (-1,-1), 0.25, colors.black) ]))
-                t.setStyle(TableStyle([('ALIGN', (0, 0), (-1, -1), 'CENTER'), ('VALIGN', (0, 0),
-                                                                               (-1, -1), 'MIDDLE'), ('FONT', (0, 0), (-1, -1), 'Helvetica-Bold', 24)]))
+                t.setStyle(TableStyle([('ALIGN', (0, 0), (-1, -1), 'CENTER'), ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'), ('FONT', (0, 0), (-1, -1), 'Helvetica-Bold', 24)]))
                 t.wrapOn(c, width, height)
                 t.drawOn(c, COL_OFFSET, ROW_OFFSET)
                 c.showPage()
