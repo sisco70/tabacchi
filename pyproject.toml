@@ -4,7 +4,7 @@ version = "0.3.1"
 description = "Tabacchi - Gestionale per tabaccherie"
 authors = ["Francesco Guarnieri"]
 license = "Apache-2.0"
-include = ["resources/*", "demo/*"]
+include = ["LICENSE", "resources/*", "demo/*"]
 
 # In https://pypi.org/pypi/PyBluez/json pyobjc-core is listed under requires_dist without any platform marker.
 # Cant'add pybluez workaround:
