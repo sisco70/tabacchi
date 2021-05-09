@@ -12,9 +12,9 @@ Ho sviluppato questo software per semplificare la gestione della mia attività s
 #### Build
 `poetry build`
 
-#### Install (Linux Ubuntu)
+#### Install (Linux Ubuntu 20.04LTS)
 ```
-sudo apt install libbluetooth-dev
+sudo apt install pkg-config python3-gi-cairo libcairo2-dev libgirepository1.0-dev libbluetooth-dev python3-testresources
 pip install tabacchi-0.3.1.tar.gz
 ```
 
