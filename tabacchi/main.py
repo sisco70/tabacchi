@@ -856,9 +856,8 @@ class RicalcolaConsumiThread(utility.WorkerThread):
 
         return False
 
+
 # Finestra principale
-
-
 class MainWindow(Gtk.ApplicationWindow, utility.GladeWindow):
     ID, DATA, PESO, IMPORTO, STATO, DATA_SUPPLETIVO, CONSEGNA, SUPPLETIVO = (0, 1, 2, 3, 4, 5, 6, 7)
     modelInfoList = [
@@ -880,7 +879,6 @@ class MainWindow(Gtk.ApplicationWindow, utility.GladeWindow):
         self.set_icon(self.logo)
 
         #           CREA LA HEADER BAR              #
-
         header_bar = Gtk.HeaderBar()
         header_bar.set_show_close_button(True)
         header_bar.set_title(self.get_title())
@@ -894,63 +892,6 @@ class MainWindow(Gtk.ApplicationWindow, utility.GladeWindow):
 
         header_bar.pack_end(btn)
         self.set_titlebar(header_bar)
-
-        #                                          #
-
-        if not prefs.checkDB():
-            msgDialog = Gtk.MessageDialog(parent=self, modal=True, message_type=Gtk.MessageType.WARNING,
-                                          buttons=Gtk.ButtonsType.OK_CANCEL, text="Inizializzo un nuovo database?")
-            msgDialog.format_secondary_text(f"Non trovo {prefs.DB_PATHNAME}")
-            msgDialog.set_title("Attenzione")
-            response = msgDialog.run()
-            msgDialog.destroy()
-            if (response == Gtk.ResponseType.OK):
-                conn = None
-                try:
-                    conn = sqlite3.connect(prefs.DB_PATHNAME)
-                    conn.execute("pragma foreign_keys=off;")
-
-                    # Table: ordineTabacchi
-                    conn.execute("CREATE TABLE ordineTabacchi (ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Data DATETIME NOT NULL, LastPos INTEGER NOT NULL DEFAULT (0), DataSuppletivo DATE DEFAULT NULL, Stato INTEGER NOT NULL DEFAULT (0), Levata DATE DEFAULT NULL, Suppletivo BOOLEAN NOT NULL DEFAULT (0), UNIQUE (Data), UNIQUE (Levata));")
-
-                    # Table: rigaOrdineSuppletivo
-                    conn.execute("CREATE TABLE rigaOrdineSuppletivo (ID varchar (8) NOT NULL, Descrizione varchar (50) NOT NULL, ID_Ordine integer NOT NULL, Ordine float NOT NULL DEFAULT '0', PRIMARY KEY (ID, ID_Ordine), CONSTRAINT fk_riga_suppletivo FOREIGN KEY (ID_Ordine) REFERENCES ordineTabacchi (ID));")
-
-                    # Table: rigaOrdineTabacchi
-                    conn.execute("CREATE TABLE rigaOrdineTabacchi (ID TEXT (8) NOT NULL, Descrizione TEXT (50) NOT NULL, ID_Ordine INTEGER NOT NULL, Ordine REAL NOT NULL DEFAULT (0), Prezzo REAL NOT NULL DEFAULT (0), Giacenza REAL NOT NULL DEFAULT (0), Consumo REAL NOT NULL DEFAULT (0), PRIMARY KEY (ID, ID_Ordine), CONSTRAINT fk_riga_ordine FOREIGN KEY (ID_Ordine) REFERENCES ordineTabacchi (ID));")
-
-                    # Table: tabacchi
-                    conn.execute("CREATE TABLE tabacchi (ID TEXT (8) NOT NULL, Descrizione TEXT (50) NOT NULL DEFAULT NULL, UnitaMin REAL NOT NULL DEFAULT (0), PrezzoKg REAL NOT NULL DEFAULT (0), Tipo TEXT (50) NOT NULL, InMagazzino BOOLEAN NOT NULL DEFAULT (0), LivelloMin REAL NOT NULL DEFAULT (0), Decorrenza DATE NOT NULL DEFAULT ('0000-00-00'), PezziUnitaMin INTEGER NOT NULL DEFAULT (0), Barcode TEXT (20) NOT NULL, PRIMARY KEY (ID));")
-
-                    # Table: verificaOrdine
-                    conn.execute("CREATE TABLE verificaOrdine (ID VARCHAR (8) NOT NULL, ID_ordine INTEGER NOT NULL, Carico REAL NOT NULL DEFAULT (0), Peso REAL NOT NULL DEFAULT (0), Eliminato BOOLEAN NOT NULL DEFAULT (0), PRIMARY KEY (ID, ID_ordine), CONSTRAINT fk_verificaOrdine_OrdineTabacchi FOREIGN KEY (ID_ordine) REFERENCES ordineTabacchi (ID) ON DELETE NO ACTION ON UPDATE NO ACTION);")
-
-                    # Index: idx_rigaOrdineSuppletivo_fk_riga_suppletivo
-                    conn.execute("CREATE INDEX idx_rigaOrdineSuppletivo_fk_riga_suppletivo ON rigaOrdineSuppletivo (ID_Ordine);")
-
-                    # Index: idx_rigaOrdineTabacchi_fk_riga_ordine
-                    conn.execute("CREATE INDEX idx_rigaOrdineTabacchi_fk_riga_ordine ON rigaOrdineTabacchi (ID_Ordine);")
-
-                    # Index: idx_tabacchi_k_inmagazzino
-                    conn.execute("CREATE INDEX idx_tabacchi_k_inmagazzino ON tabacchi (InMagazzino);")
-
-                    # Index: idx_tabacchi_k_tipo
-                    conn.execute("CREATE INDEX idx_tabacchi_k_tipo ON tabacchi (Tipo);")
-
-                    # Index: idx_verificaOrdine_fk_verificaOrdine_OrdineTabacchi
-                    conn.execute("CREATE INDEX idx_verificaOrdine_fk_verificaOrdine_OrdineTabacchi ON verificaOrdine (ID_ordine);")
-
-                    conn.commit()
-                except sqlite3.Error as e:
-                    if conn:
-                        conn.rollback()
-                    utility.gtkErrorMsg(e, self)
-                    sys.exit(1)
-                finally:
-                    if conn:
-                        conn.close()
-            else:
-                sys.exit(1)
 
         self.ordiniPopupMenu = self.builder.get_object("ordiniPopupMenu")
         self.modificaOrdineMenuItemActivate = self.builder.get_object("on_modificaOrdineMenuItem_activate")
@@ -1827,11 +1768,75 @@ class MainApplication(Gtk.Application):
     def do_startup(self):
         Gtk.Application.do_startup(self)
 
-        # Legge le preferenze
+        # Legge le preferenze e nel caso non ci fossero (prima esecuzione) propone conf. dimostrativa o init.
         try:
+            # Se non trova un Database
+            if not prefs.checkDB():
+                msgDialog = Gtk.MessageDialog(message_type=Gtk.MessageType.WARNING, buttons=Gtk.ButtonsType.YES_NO, text="DB non trovato. Creo una configurazione dimostrativa?")
+                msgDialog.format_secondary_text("Altrimenti, sarà creato un DB vuoto.")
+                msgDialog.set_title("Attenzione")
+                response = msgDialog.run()
+                msgDialog.destroy()
+                if (response == Gtk.ResponseType.NO):
+                    conn = None
+                    try:
+                        conn = sqlite3.connect(prefs.DB_PATHNAME)
+                        conn.execute("pragma foreign_keys=off;")
+
+                        # Table: ordineTabacchi
+                        conn.execute("CREATE TABLE ordineTabacchi (ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Data DATETIME NOT NULL, LastPos INTEGER NOT NULL DEFAULT (0), DataSuppletivo DATE DEFAULT NULL, Stato INTEGER NOT NULL DEFAULT (0), Levata DATE DEFAULT NULL, Suppletivo BOOLEAN NOT NULL DEFAULT (0), UNIQUE (Data), UNIQUE (Levata));")
+
+                        # Table: rigaOrdineSuppletivo
+                        conn.execute("CREATE TABLE rigaOrdineSuppletivo (ID varchar (8) NOT NULL, Descrizione varchar (50) NOT NULL, ID_Ordine integer NOT NULL, Ordine float NOT NULL DEFAULT '0', PRIMARY KEY (ID, ID_Ordine), CONSTRAINT fk_riga_suppletivo FOREIGN KEY (ID_Ordine) REFERENCES ordineTabacchi (ID));")
+
+                        # Table: rigaOrdineTabacchi
+                        conn.execute("CREATE TABLE rigaOrdineTabacchi (ID TEXT (8) NOT NULL, Descrizione TEXT (50) NOT NULL, ID_Ordine INTEGER NOT NULL, Ordine REAL NOT NULL DEFAULT (0), Prezzo REAL NOT NULL DEFAULT (0), Giacenza REAL NOT NULL DEFAULT (0), Consumo REAL NOT NULL DEFAULT (0), PRIMARY KEY (ID, ID_Ordine), CONSTRAINT fk_riga_ordine FOREIGN KEY (ID_Ordine) REFERENCES ordineTabacchi (ID));")
+
+                        # Table: tabacchi
+                        conn.execute("CREATE TABLE tabacchi (ID TEXT (8) NOT NULL, Descrizione TEXT (50) NOT NULL DEFAULT NULL, UnitaMin REAL NOT NULL DEFAULT (0), PrezzoKg REAL NOT NULL DEFAULT (0), Tipo TEXT (50) NOT NULL, InMagazzino BOOLEAN NOT NULL DEFAULT (0), LivelloMin REAL NOT NULL DEFAULT (0), Decorrenza DATE NOT NULL DEFAULT ('0000-00-00'), PezziUnitaMin INTEGER NOT NULL DEFAULT (0), Barcode TEXT (20) NOT NULL, PRIMARY KEY (ID));")
+
+                        # Table: verificaOrdine
+                        conn.execute("CREATE TABLE verificaOrdine (ID VARCHAR (8) NOT NULL, ID_ordine INTEGER NOT NULL, Carico REAL NOT NULL DEFAULT (0), Peso REAL NOT NULL DEFAULT (0), Eliminato BOOLEAN NOT NULL DEFAULT (0), PRIMARY KEY (ID, ID_ordine), CONSTRAINT fk_verificaOrdine_OrdineTabacchi FOREIGN KEY (ID_ordine) REFERENCES ordineTabacchi (ID) ON DELETE NO ACTION ON UPDATE NO ACTION);")
+
+                        # Index: idx_rigaOrdineSuppletivo_fk_riga_suppletivo
+                        conn.execute("CREATE INDEX idx_rigaOrdineSuppletivo_fk_riga_suppletivo ON rigaOrdineSuppletivo (ID_Ordine);")
+
+                        # Index: idx_rigaOrdineTabacchi_fk_riga_ordine
+                        conn.execute("CREATE INDEX idx_rigaOrdineTabacchi_fk_riga_ordine ON rigaOrdineTabacchi (ID_Ordine);")
+
+                        # Index: idx_tabacchi_k_inmagazzino
+                        conn.execute("CREATE INDEX idx_tabacchi_k_inmagazzino ON tabacchi (InMagazzino);")
+
+                        # Index: idx_tabacchi_k_tipo
+                        conn.execute("CREATE INDEX idx_tabacchi_k_tipo ON tabacchi (Tipo);")
+
+                        # Index: idx_verificaOrdine_fk_verificaOrdine_OrdineTabacchi
+                        conn.execute("CREATE INDEX idx_verificaOrdine_fk_verificaOrdine_OrdineTabacchi ON verificaOrdine (ID_ordine);")
+
+                        conn.commit()
+                    except sqlite3.Error as e:
+                        if conn:
+                            conn.rollback()
+                        raise e
+                    finally:
+                        if conn:
+                            conn.close()
+                elif (response == Gtk.ResponseType.YES):
+                    src = config.BASE_PATH / 'demo/tabacchi.sqlite'
+                    dest = prefs.DB_PATHNAME
+                    dest.write_bytes(src.read_bytes())
+                    src = config.BASE_PATH / 'demo/preferences.cfg'
+                    src_str = src.read_text()
+                    dest_str = src_str.replace('./demo/', f"{config.BASE_PATH / 'demo'}{os.sep}")
+                    dest = config.CONF_PATHNAME
+                    dest.write_text(dest_str)
+                else:
+                    sys.exit(1)
+
             prefs.load()
         except Exception as e:
             utility.gtkErrorMsg(e, None)
+            sys.exit(1)
 
         action = Gio.SimpleAction.new("about", None)
         action.connect("activate", self.on_about)
@@ -1888,6 +1893,9 @@ class MainApplication(Gtk.Application):
         aboutDialog.set_program_name(config.__desc__)
         aboutDialog.set_version(config.__version__)
         aboutDialog.set_copyright(config.__copyright__)
+        with open(config.BASE_PATH.parent / 'LICENSE', mode='r') as f:
+            license = f.read()
+            aboutDialog.set_license(license)
         aboutDialog.set_logo(self.mainWindow.logo)
         aboutDialog.present()
 
@@ -2057,7 +2065,6 @@ class MainApplication(Gtk.Application):
         Gio.Subprocess.new(["gio", "open", tmpFile.name], Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_MERGE)
 
     # Stampa etichette prezzi
-
     def printLabels(self, action, param):
         labelsDialog = stampe.LabelsDialog(self.mainWindow)
         result = labelsDialog.run()

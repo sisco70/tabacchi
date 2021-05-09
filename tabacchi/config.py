@@ -73,6 +73,7 @@ datefmt=%Y-%m-%d %H:%M:%S
 '''
 
 
+# Inizializza il file di configurazione del logging dell'applicazione
 def __initialize_logger():
     logging_file_config = user_config_dir / "logging.cfg"
     if not logging_file_config.exists():
@@ -84,6 +85,7 @@ def __initialize_logger():
     return logger
 
 
+# Inizializza i dunders tramite "pyproject.toml" oppure dal program_metadata
 def __initialize_dunders():
     prj_filename = BASE_PATH.parent / "pyproject.toml"
     result = {'version': '0.0.0', 'author': '', 'desc': ''}
@@ -97,9 +99,9 @@ def __initialize_dunders():
     else:
         try:
             program_metadata = metadata.metadata(PACKAGE_NAME)
-            result['version'] = program_metadata["version"]
-            result['author'] = program_metadata["author"]
-            result['desc'] = program_metadata["summary"]
+            result['version'] = program_metadata["Version"]
+            result['author'] = program_metadata["Author"]
+            result['desc'] = program_metadata["Summary"]
         except metadata.PackageNotFoundError:
             pass
 
@@ -112,5 +114,6 @@ __author__ = dunders['author']
 __desc__ = dunders['desc']
 __version__ = dunders['version']
 __copyright__ = "Copyright 2020 - Francesco Guarnieri"
+
 
 log = __initialize_logger()

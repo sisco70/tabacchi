@@ -1,6 +1,9 @@
 #
 # Copyright (C) Francesco Guarnieri 2020 <francesco@guarnie.net>
 #
+#
+# TODO: Passaggio a Playwright
+
 import gi
 from .config import log
 
